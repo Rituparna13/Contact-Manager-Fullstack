@@ -7,8 +7,10 @@ const EMPTY = { first_name: '', last_name: '', address: '', email: '', phone: ''
 export default function ContactForm({ editContact, onClose }) {
   const dispatch = useDispatch();
   const { loading, fieldErrors, successMessage } = useSelector(s => s.contacts);
+
   const [form, setForm] = useState(EMPTY);
   const [touched, setTouched] = useState({});
+  const [localErrors, setLocalErrors] = useState({}); 
 
   useEffect(() => {
     if (editContact) {
@@ -23,6 +25,7 @@ export default function ContactForm({ editContact, onClose }) {
       setForm(EMPTY);
     }
     setTouched({});
+    setLocalErrors({});
     dispatch(clearMessages());
   }, [editContact, dispatch]);
 
@@ -43,15 +46,40 @@ export default function ContactForm({ editContact, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-     if (form.first_name.length > 25 || form.last_name.length > 25) {
-    alert("First name and Last name should not exceed 25 characters");
-    return;
-  }
+
+    const errors = {};
+
+    // First Name validation
+    if (form.first_name.length > 25) {
+      errors.first_name = "First name should not exceed 25 characters";
+    }
+
+    // Last Name validation
+    if (form.last_name.length > 25) {
+      errors.last_name = "Last name should not exceed 25 characters";
+    }
+
+    // Phone validation (+countrycode + 10 digits)
     if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
-    alert("Phone number must include country code (e.g., +91) followed by 10 digits");
-    return;
-  }
-    setTouched({ first_name: true, last_name: true, address: true, email: true, phone: true });
+      errors.phone = "Use format: +91XXXXXXXXXX";
+    }
+
+    // If errors → show in UI
+    if (Object.keys(errors).length > 0) {
+      setLocalErrors(errors);
+      setTouched({
+        first_name: true,
+        last_name: true,
+        address: true,
+        email: true,
+        phone: true,
+      });
+      return;
+    }
+
+    // Clear errors
+    setLocalErrors({});
+
     if (editContact) {
       dispatch(updateContact({ id: editContact.id, data: form }));
     } else {
@@ -64,7 +92,7 @@ export default function ContactForm({ editContact, onClose }) {
     { name: 'last_name', label: 'Last Name', type: 'text', placeholder: 'e.g. Sharma' },
     { name: 'address', label: 'Address', type: 'text', placeholder: 'e.g. 12 MG Road, Bangalore' },
     { name: 'email', label: 'Email Address', type: 'email', placeholder: 'e.g. priya@gmail.com' },
-    { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: 'e.g. +91 98765 43210' },
+    { name: 'phone', label: 'Phone Number', type: 'tel', placeholder: 'e.g. +919876543210' },
   ];
 
   return (
@@ -94,10 +122,13 @@ export default function ContactForm({ editContact, onClose }) {
                   placeholder={f.placeholder}
                   value={form[f.name]}
                   onChange={handleChange}
-                  className={fieldErrors[f.name] && touched[f.name] ? 'input-error' : ''}
+                  className={(fieldErrors[f.name] || localErrors[f.name]) && touched[f.name] ? 'input-error' : ''}
                 />
-                {fieldErrors[f.name] && touched[f.name] && (
-                  <span className="field-error">{fieldErrors[f.name]}</span>
+
+                {(fieldErrors[f.name] || localErrors[f.name]) && touched[f.name] && (
+                  <span className="field-error">
+                    {localErrors[f.name] || fieldErrors[f.name]}
+                  </span>
                 )}
               </div>
             ))}
