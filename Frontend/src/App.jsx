@@ -1,9 +1,11 @@
 import React, { useEffect, useState, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts, setSearch } from '../store/contactsSlice';
+import { fetchContacts, setSearch } from './contactsSlice';
+
 import ContactCard from './ContactCard';
 import ContactForm from './ContactForm';
-import '../styles/app.css';
+
+import './app.css';
 
 export default function App() {
   const dispatch = useDispatch();
