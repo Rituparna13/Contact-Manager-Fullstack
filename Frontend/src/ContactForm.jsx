@@ -43,6 +43,10 @@ export default function ContactForm({ editContact, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+     if (form.first_name.length > 25 || form.last_name.length > 25) {
+    alert("First name and Last name should not exceed 25 characters");
+    return;
+  }
     if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
     alert("Phone number must include country code (e.g., +91) followed by 10 digits");
     return;
