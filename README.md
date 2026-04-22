@@ -16,33 +16,6 @@
 
 ---
 
-## Project Structure
-
-```
-mira-contacts/
-├── backend/
-│   ├── app.py              ← Flask API (all endpoints)
-│   ├── requirements.txt    ← Python dependencies
-│   └── contacts.db         ← SQLite database (auto-created)
-└── frontend/
-    ├── index.html
-    ├── package.json
-    ├── vite.config.js
-    └── src/
-        ├── main.jsx                    ← Entry point
-        ├── store/
-        │   ├── index.js                ← Redux store config
-        │   └── contactsSlice.js        ← All async thunks + reducers
-        ├── components/
-        │   ├── App.jsx                 ← Root component (search, layout)
-        │   ├── ContactCard.jsx         ← Individual contact display
-        │   └── ContactForm.jsx         ← Create/Edit modal form
-        └── styles/
-            └── app.css                 ← Complete custom styling
-```
-
----
-
 ## How to Run
 
 ### Step 1 — Backend (Flask)
