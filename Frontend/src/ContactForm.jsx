@@ -60,9 +60,9 @@ export default function ContactForm({ editContact, onClose }) {
     }
 
     // Phone validation (+countrycode + 10 digits)
-    if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
-      errors.phone = "Use format: +91XXXXXXXXXX";
-    }
+if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
+  errors.phone = "Use format: +91XXXXXXXXXX";
+}
 
     // If errors → show in UI
     if (Object.keys(errors).length > 0) {
