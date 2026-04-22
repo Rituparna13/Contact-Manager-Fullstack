@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../store/contactsSlice';
+import { deleteContact } from './contactsSlice';
 
 export default function ContactCard({ contact, onEdit }) {
   const dispatch = useDispatch();
