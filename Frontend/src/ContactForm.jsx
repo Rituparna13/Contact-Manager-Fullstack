@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { createContact, updateContact, clearMessages } from '../store/contactsSlice';
+import { createContact, updateContact, clearMessages } from './contactsSlice';
 
 const EMPTY = { first_name: '', last_name: '', address: '', email: '', phone: '' };
 
