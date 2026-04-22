@@ -43,6 +43,10 @@ export default function ContactForm({ editContact, onClose }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
+    alert("Phone number must include country code (e.g., +91) followed by 10 digits");
+    return;
+  }
     setTouched({ first_name: true, last_name: true, address: true, email: true, phone: true });
     if (editContact) {
       dispatch(updateContact({ id: editContact.id, data: form }));
