@@ -59,9 +59,9 @@ export default function ContactForm({ editContact, onClose }) {
       errors.last_name = "Last name should not exceed 25 characters";
     }
 
-    // Phone validation (+countrycode + 10 digits)
-if (!/^\+\d{1,3}\d{10}$/.test(form.phone)) {
-  errors.phone = "Use format: +91XXXXXXXXXX";
+   // Phone validation (+countrycode + space + 10 digits)
+if (!/^\+\d{1,3}\s\d{10}$/.test(form.phone)) {
+  errors.phone = "Use format: +91 9876543210";
 }
 
     // If errors → show in UI
